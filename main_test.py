@@ -12,14 +12,14 @@ ts.set_token(token)
 
 start_date = '20150101'
 end_date = '20191130'
-df = ts.daily(ts_code='600115.SH', start_date=start_date, end_date=end_date)
-df_base = ts.daily(ts_code='000001.SH', start_date=start_date, end_date=end_date)
+df = ts.pro_bar(ts_code='600115.SH', start_date=start_date, end_date=end_date, ma=[5, 10, 20, 30, 60])
+# df_base = ts.pro_bar(ts_code='000001.SH', start_date=start_date, end_date=end_date)
 
 df.sort_index(ascending=False, inplace=True)
 df.reset_index(drop=True, inplace=True)
 
-df_base.sort_index(ascending=False, inplace=True)
-df_base.reset_index(drop=True, inplace=True)
+# df_base.sort_index(ascending=False, inplace=True)
+# df_base.reset_index(drop=True, inplace=True)
 
 myStrategy = zyquant.Strategy.DoubleMAStrategy(df, 5, 20)
 mydf = myStrategy.generate_signals()
@@ -39,7 +39,7 @@ myBacktester.run_backtesting()
 
 plt.figure()
 plt.plot(np.array(myBacktester.bill) / 20000)
-plt.plot(df_base['close'] / df_base.iloc[0]['close'])
+# plt.plot(df_base['close'] / df_base.iloc[0]['close'])
 
 
 
