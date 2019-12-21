@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 token = '84eb2c8fc9959a5ee43a3118a6306d10e63c2d42fa68cb49bcf4b300'  # 用户token
 ts.set_token(token)
 
-start_date = '20150101'
+start_date = '20100101'
 end_date = '20191130'
 df = ts.pro_bar(ts_code='600115.SH', start_date=start_date, end_date=end_date, ma=[5, 10, 20, 30, 60])
 # df_base = ts.pro_bar(ts_code='000001.SH', start_date=start_date, end_date=end_date)
@@ -22,6 +22,7 @@ df.reset_index(drop=True, inplace=True)
 # df_base.reset_index(drop=True, inplace=True)
 
 myStrategy = zyquant.Strategy.DoubleMAStrategy(df, 5, 20)
+myStrategy.set_stop_loss(0.08)
 mydf = myStrategy.generate_signals()
 
 myCashier = zyquant.Cashier.Cashier(20000, 0.00025, 0.00125)
